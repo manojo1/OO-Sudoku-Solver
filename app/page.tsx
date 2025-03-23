@@ -10,6 +10,7 @@ import { BruteForceSolver } from "./SudokuSrc/BruteForceSolver";
 import { BruteForceNew } from "./SudokuSrc/BruteForceNew";
 import "./globals.css";
 import "./page.module.css";
+import { hydrateRoot } from 'react-dom/client';
 //import parse from 'html-react-parser'
 
 export default function Home() {
@@ -21,28 +22,26 @@ export default function Home() {
   let [solveStrategyType, setSolveStrategyType] = useState(2);
   let [localSudoku, setLocalSudoku] = useState(new Sudoku(gridSize));
   //localSudoku.setFixedCellValue(1, 1, 3); 
-
-
+//let localSudoku=new Sudoku(gridSize);
+//localSudoku.copy();
   function setGridStyleSize(size: number) {
     //document.documentElement.style.setProperty('--grid-size', (size*size).toString());
   }
 
+ 
   const handleReset = () => {
-    localSudoku=new Sudoku(gridSize);
-    setLocalSudoku(localSudoku);
+    setLocalSudoku(new Sudoku(gridSize));
     setGridStyleSize(gridSize);
   }
 
   const handleChangeGridSize = (gridSize: number) => {
     setGridSize(gridSize);
-    localSudoku=new Sudoku(gridSize);
-    setLocalSudoku(localSudoku);
+    setLocalSudoku(new Sudoku(gridSize));
     setGridStyleSize(gridSize);
-
   }
 
   const handleChangeSolver = (solverType: number) => {
-
+//localSudoku=new Sudoku(gridSize);
     if (solverType === 1) {
       localSudoku.solveStrategy = new BruteForceNew();
       setSolveStrategyType(1);
@@ -53,15 +52,16 @@ export default function Home() {
       localSudoku.solveStrategy = new QuickSolver();
       setSolveStrategyType(2);
     }
-    setLocalSudoku(localSudoku);
+    
+    //setLocalSudoku(localSudoku.copy() as Sudoku);
 
   }
 
   const handleCellValue = (row: number, col: number, val:number) => {
     //if (/^[1-9]?$/.test(value.toString())) { 
     console.log("row,col,value",row,col,val);
-    localSudoku.setFixedCellValue(row+1, col+1, val); 
-    setLocalSudoku(localSudoku);
+    localSudoku.setFixedCellValue(row+1, col+1, val);
+    setLocalSudoku(localSudoku.copy() as Sudoku);
     //} 
   };
 
@@ -83,8 +83,9 @@ export default function Home() {
       //localSudoku.setFixedCellValue(1, 1, 3); 
 
       localSudoku.solve();
+      //setLocalSudoku(localSudoku.copy() as Sudoku);
+
       const endTime = performance.now();
-      setLocalSudoku(localSudoku);
       solveTime = endTime - startTime;
       setSolveTime(solveTime);
     }
@@ -103,12 +104,7 @@ export default function Home() {
                 {row.Cells.map((cell, cIndex) => (
                   <td key={cIndex} className="cell">
                     <b>{cell.Value}</b>
-                    <input
-                              type="text"
-                              key={`${rIndex}-${cIndex}`}
-                              value={cell.val?.toString()}
-                              onChange={(e) => handleCellValue(rIndex, cIndex, Number(e.target.value))}
-                          />
+         
 
                   </td>
                 ))}
@@ -141,7 +137,7 @@ export default function Home() {
         </label>
         <label>
           <input
-            type="radio"
+          type="radio"
             name="gridSizeInput"
             value="3"
             checked={localSudoku.gridSize === 3}
@@ -183,7 +179,6 @@ export default function Home() {
           Quick Solver 11
         </label>
       </div>
-      {String(solveStrategyType)}
     </div>
   );
 }
