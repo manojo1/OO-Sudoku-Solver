@@ -1,0 +1,162 @@
+:root {
+  --pastel-light-bg: #f7f7f7;
+  --pastel-light-border:rgb(231, 230, 230);
+  --pastel-dark-bg: #2a2a2a;
+  --pastel-dark-border: #ffb4a2;
+  --grid-size:9;
+}
+
+/* Light Theme */
+.light {
+  background: var(--pastel-light-bg);
+  color: black;
+}
+
+/* Dark Theme */
+.dark {
+  background: var(--pastel-dark-bg);
+  color: white;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1px;
+  border: 1px solid black;
+}
+
+.outerSudoku {
+
+  align-items: center;
+  padding: 1px;
+  border: 1px solid rgb(184, 183, 183);
+}
+
+
+/* Theme Toggle Button */
+.themeToggle {
+  margin-bottom: 15px;
+  padding: 10px 15px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--pastel-light-border);
+  color: white;
+  font-size: 16px;
+}
+
+.themeToggle:hover {
+  background-color: #e08e6f;
+}
+
+/* Sudoku Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), 50px);
+  grid-template-rows: repeat(var(--grid-size), 50px);
+  gap: 5px;
+  padding: 2px;
+  border: 2px solid var(--pastel-light-border);
+  background: lightgray;
+}
+
+/* Sudoku Cells */
+.cell {
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  font-size: 20px;
+  border: 1px solid var(--pastel-light-border);
+  background: #f7f7f7;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.cell:focus {
+  border-color: #ffb4a2;
+  transform: scale(1.1);
+}
+
+.disabled {
+  opacity: 0.5;
+}
+
+/* Solve button */
+.solveButton {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color:rgb(221, 184, 145);
+  color: white;
+  border-radius: 5px;
+}
+
+/* Reset button */
+.resetButton {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(221, 184, 145);
+  color: white;
+  border-radius: 5px;
+}
+
+
+.solveButton:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
+
+/* Status Messages */
+.status {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.light .status {
+  color: #d4a373;
+}
+
+.dark .status {
+  color: #ffb4a2;
+}
+
+
+/* Add borders around 3x3 groups */
+.grid .cell:nth-child(3n+1) {
+  border-left: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(3n) {
+  border-right: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(n+1):nth-child(-n+9) {
+  border-top: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(n+73):nth-child(-n+81) {
+  border-bottom: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(27n+1) {
+  border-left: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(27n) {
+  border-right: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(n+1):nth-child(-n+27) {
+  border-top: 2px solid var(--pastel-dark-border);
+}
+
+.grid .cell:nth-child(n+55):nth-child(-n+81) {
+  border-bottom: 2px solid var(--pastel-dark-border);
+}
